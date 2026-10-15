@@ -1,0 +1,26 @@
+{
+  "name": "botnexa-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BotNexa - Multi-Tenant AI Chatbot SaaS Platform powered by Google Gemini and PostgreSQL pgvector",
+  "scripts": {
+    "dev:server": "pnpm --filter server start:dev",
+    "dev:client": "pnpm --filter client dev",
+    "build:server": "pnpm --filter server build",
+    "build:client": "pnpm --filter client build",
+    "build": "pnpm build:server && pnpm build:client",
+    "test:server": "pnpm --filter server test"
+  },
+  "keywords": [
+    "ai",
+    "saas",
+    "gemini",
+    "pgvector",
+    "nextjs",
+    "nestjs",
+    "multi-tenant",
+    "rag"
+  ],
+  "author": "BotNexa Team",
+  "license": "UNLICENSED"
+}

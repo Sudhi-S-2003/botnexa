@@ -1,0 +1,47 @@
+# render.yaml - Render Blueprint for BotNexa Multi-Tenant AI Platform
+# Deploys unified Web Service (Next.js + NestJS + Nginx + Redis) with PostgreSQL pgvector support.
+
+services:
+  - type: web
+    name: botnexa
+    env: docker
+    plan: free
+    dockerfilePath: ./render-infrastructure/Dockerfile
+    envVars:
+      # Render routes external HTTP requests to Nginx entrypoint on PORT
+      - key: PORT
+        value: 10000
+      - key: CLIENT_PUBLIC_URL
+        value: "https://botnexa.onrender.com"
+      - key: BACKEND_PUBLIC_URL
+        value: "https://botnexa.onrender.com/botnexa-api"
+      - key: WEB_ORIGIN
+        value: "https://botnexa.onrender.com"
+      - key: NEXT_PUBLIC_BACKEND_URL
+        value: "/botnexa-api"
+      - key: BACKEND_INTERNAL_URL
+        value: "http://127.0.0.1:4001"
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: "gemini-3.5-flash-lite"
+      - key: GEMINI_EMBEDDING_MODEL
+        value: "gemini-embedding-001"
+      - key: GOOGLE_PROJECT_NAME
+        value: "projects/332966178062"
+      - key: GOOGLE_PROJECT_NUMBER
+        value: "332966178062"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: botnexa-db
+          property: connectionString
+      - key: REDIS_URL
+        value: "redis://127.0.0.1:6379"
+
+databases:
+  - name: botnexa-db
+    databaseName: botnexa_db
+    user: botnexa_user
+    plan: free
